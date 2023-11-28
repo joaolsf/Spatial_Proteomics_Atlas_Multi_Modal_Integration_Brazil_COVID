@@ -183,11 +183,7 @@ fviz_pca_ind(pca.mydata2, geom.ind = "point", habillage = 40, pointsize = 10, po
              addEllipses =FALSE, ellipse.type = "confidence", ellipse.level = 0.95,
              palette = c("red", "brown", "black", "blue", "grey"), repel = TRUE, mean.point = FALSE, axes.linetype = "blank") + theme_bw(base_size = 14)
 
-
-
-
-
-"#00BA38", "#619CFF", "#F8766D"
+# "#00BA38", "#619CFF", "#F8766D"
 
 #All the outputs of the PCA (individuals/variables coordinates, contributions, etc) can be exported at once, into a TXT/CSV file, using the function write.infile() [in FactoMineR] package:
 # Export into a TXT file
@@ -195,9 +191,7 @@ write.infile(pca.mydata, "pca.txt", sep = "\t")
 # Export into a CSV file
 write.infile(pca.mydata, "pca.csv", sep = ";")
 
-
-
-#Biplot
+# Biplot
 
 pca.mydata3 <- PCA(df_to_cluster, quali.sup = 93:97, graph=FALSE)
 
@@ -243,25 +237,3 @@ p2 <- fviz_pca_ind(pca.mydata,
                    col.ind = "white", col.var = "white",) + ggpubr::fill_palette(palette = c("#FDE725FF", "#55C667FF", "#238A8DFF","#453781FF", 'black')) + theme_light(base_size = 12) 
 
 p2 + geom_point(aes(shape = multiplex$Category), size=6) + scale_shape_manual(values=c(21, 22, 23)) #changes the shape accordingly to the groups 
-
-
-
-#c("salmon", "blue", "dark grey")
-
-#+ scale_color_gradient2(low="orange", mid="purple", 
-                        high="black", midpoint=5) +
-#colorRampPalette(rev(brewer.pal(n = 7, name = "Spectral")))(7))
-#gradient.cols = magma(5, direction = -1)
-#viridis
-#magma
-#plasma
-#inferno
-#mako
-
-#brewer.pal(n = 5, name = "YlOrRd"), space = "RGB"
-#palette = c("salmon", "light blue")
-#"grey"
-#"dark green", 
-#"black"
-#"blue", "orange","dark green","red"
-#"grey", "red", "brown","light blue","blue", "dark blue"
