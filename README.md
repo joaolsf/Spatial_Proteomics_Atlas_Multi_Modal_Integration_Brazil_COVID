@@ -17,7 +17,7 @@ PCA, UMAP, hierarchical clustering, K-means clustering, EFA, trajectory inferenc
 ### 2- Scripts containing all imaging mass cytometry analysis of the post-mortem lungs:
 Pre-processing, cell segmentation, extraction of single-cell features, single-cell and spatial statistics analysis.
 ### 3- Multi-modal data integration:
-   
+Multi-factor analysis (MFA), Multi-Omics Factor Analysis (MOFA), Method for the Functional Integration of Spatial and Temporal Omics data (MEFISTO) and Sparse Decomposition of Arrays (SDA).
 ## Figures:
 Scripts containing all steps to regenerate figures from the study.
 
