@@ -1,4 +1,4 @@
-# Brazil_COVID_cell_atlas
+Brazil_COVID_cell_atlas
 Longitudinal and full autopsy study to generate a spatially resolved single cell atlas of the post-mortem lung in COVID-19 and to integrate with ante-mortem signatures from clinical and high-plex peripheral blood profiling data. Here, you can find the codebase of the study.
 
 # Disease trajectories in hospitalized COVID-19 patients are predicted by clinical and peripheral blood signatures representing distinct lung pathologies.
