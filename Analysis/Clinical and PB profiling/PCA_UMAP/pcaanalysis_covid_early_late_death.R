@@ -240,26 +240,3 @@ p2 <- fviz_pca_ind(pca.mydata,
                    col.ind = "white", col.var = "white",) + ggpubr::fill_palette(palette = magma(11, alpha = 1, begin = 0, end = 0.95, direction = -1)) + theme_light(base_size = 12) 
 
 p2 + geom_point(aes(shape = multiplex$Category), size=5) + scale_shape_manual(values=c(21, 22, 23)) #changes the shape accordingly to the groups 
-
-
-
-
-
-
-
-
-
-
-magma(4, alpha = 1, begin = 0, end = 0.95, direction = -1)
-+ scale_color_gradient2(low="orange", mid="purple", 
-                                   high="black", midpoint=1.5) +
-  
-colorRampPalette(rev(brewer.pal(n = 7, name = "Spectral")))(7))
-
-ggpubr::fill_palette(palette = c("salmon", "light blue"))
-
-"grey"
-"dark green", 
-"black"
-"blue", "orange","dark green","red"
-"grey", "red", "brown","light blue","blue", "dark blue"
