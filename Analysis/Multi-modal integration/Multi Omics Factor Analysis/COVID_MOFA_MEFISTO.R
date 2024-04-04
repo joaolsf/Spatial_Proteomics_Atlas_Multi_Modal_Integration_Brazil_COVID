@@ -45,12 +45,6 @@ write.csv(mydata_complete, "COVID_early_late_death_MOFA_MEFISTO_missing_data_com
 # 2.2- Scale data
 
 multiplex <- read.csv("COVID_early_late_death_MOFA_MEFISTO_missing_data_complete.csv")
-
-# remove categorical columns
-# select_cols <- colnames(multiplex)
-# select_cols <- select_cols[!select_cols %in% c("BlockID", "Age", "Weight", "BMI", "DOSAA", "DOSAPA", "Score", "Length")]
-# multiplex <- multiplex[,select_cols]
-
 df_to_cluster <- multiplex[,-1]
 rownames(df_to_cluster) <- multiplex$RecordID
 df_to_cluster_scale <- df_to_cluster[,1:202]
@@ -645,15 +639,6 @@ plot_factors(MOFAobject,
 
 
 #4.8- Building predictive models of clinical outcome (add the DDOUD to the model)
-#The factors inferred by MOFA can be related to clinical outcomes such as time to treatment or survival times.
-#As this type of data is censored (not for all samples we have already observed the event) we will use Cox models for this purpose.
-#In a Cox proportional hazards model we model the hazard of an event occurring (e.g. death or treatment) as a function of some covariates (here the factors). 
-#If a factor has a influence on the survival time or time to treatment it will receive a high absoulte coefficient in the Cox model. In particular:
-#If the coefficient is positive, samples with large factor values have an increased hazard (of death or treatment) compared to samples with small factor values.
-#If the coefficient is negative, samples with small factor values have an increased hazard compared to samples with a large factor values.
-#To fit these models we will use the coxph function in the survival package. The survival data is stored in a survival object that contains both the time a sample has been followed up and whether the event has occured (as 0,1).
-#I will use DDOUD as covariate here.
-
 #4.8.1-Fit COX Models
 library(survival)
 library(survminer)
@@ -662,10 +647,6 @@ SurvObject <- Surv(MOFAobject@samples_metadata$DDOUD)
 Z <- get_factors(MOFAobject)[[1]]
 fit <- coxph(SurvObject ~ Z) 
 fit
-
-#We can see that factor2 have a significant association to DDOUD. 
-#For example, Factor 2 has a positive coefficient. 
-#Samples with high factor values have an increased hazard compared to samples with low factor values.
 
 #4.8.1- Plot Hazard ratios
 s <- summary(fit)
