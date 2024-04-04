@@ -20,15 +20,13 @@ mydata <- multiplex[,-1]
 mydata2 <- mydata[,1:85]
 mydata2 <- as.data.frame(mydata2)
 
-# retirando as colunas indesejadas para o heatmap
 #select_cols <- colnames(multiplex)
 #select_cols <- select_cols[!select_cols %in% c("Age", "BMI", "Weight","Temperature", "HR",	"RR",	"SpO2",	"Disease_Score", "Outcome", "Outcome2", "Category2", "Day")]
 #multiplex <- multiplex[,select_cols]
 
 mydata2$Outcome <- as.factor(mydata2$Outcome)
 
-# Tutorial 1 - Using random Forests
-
+# Random Forests
 # train model
 set.seed(123)
 sample_data = sample.split(mydata2, SplitRatio = 0.7)
@@ -115,8 +113,6 @@ opt.cut = function(perf, pred){
 }
 print(opt.cut(pred2, pred))
 
-
-# Tutorial 2 (from guru99.com)
 # Train the RF model
 
 set.seed(123)
@@ -203,7 +199,7 @@ saveRDS(rf_train2,"rftrain_model2.rds")
 rf_train <- readRDS("rftrain_model1.rds")
 rf_train2 <- readRDS("rftrain_model2.rds")
 
-# Tutorial 3 - Tuning and training RF model
+# Tuning and training RF model
 
 # Tuning a model is very tedious work. There are lot of combination possible between the parameters. 
 # You don't necessarily have the time to try all of them. 
@@ -298,10 +294,6 @@ results_tree <- resamples(store_maxtrees)
 summary(results_tree)
 #Record the OOB error rate and see the number of trees where the out of bag error rate stabilizes and reach minimum.
 
-#You have your final model. You can train the random forest with the following parameters:
-#ntree = 1000: 100 trees will be trained
-#mtry=4: 4 features is chosen for each iteration
-#maxnodes = 15: Maximum 15 nodes in the terminal nodes (leaves)
 fit_rf <- train(Outcome~.,
                 train_data,
                 method = "rf",
