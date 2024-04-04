@@ -10,7 +10,7 @@ library(forcats)
 library(Rmisc)
 
 
-# reading file (importar o arquivo)
+# reading file
 multiplex <- read.csv("factor_loadings_patient_boxplot.csv")
 
 #BOX PLOTS METHOD 1
