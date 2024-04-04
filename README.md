@@ -20,5 +20,8 @@ Multi-factor analysis (MFA), Multi-Omics Factor Analysis (MOFA), Method for the 
 ## Figures:
 Scripts containing all steps to regenerate figures from the study.
 
+Histopathology (H&E, IHC), in situ hybridization (ISH) and immunofluorescence (IF) slides can be visualized in detail and higher magnification at https://covid-atlas.cvr.gla.ac.uk. 
+IMC data (MCD files containing raw imaging mass cytometry data, denoised processed multi-channel TIFF files and cell segmentation masks) are available at https://doi.org/10.5281/zenodo.10911591.
+
 
 
