@@ -1,6 +1,3 @@
-# reading file (importar o arquivo)
-covid_clinical <- read.csv("/Users/joaoluizsfilho/Dropbox/Work Files/Matthia's Lab/Projects/COVID-19 project/Glasgow/Paper 1/Clinical_luminex_data/Longitudinal clinical/Mixed linear model/covid_data.csv")
-Age_gender_adjusted_values <- read.csv("/Users/joaoluizsfilho/Dropbox/Work Files/Matthia's Lab/Projects/COVID-19 project/Glasgow/Paper 1/Clinical_luminex_data/Longitudinal clinical/Mixed linear model/Age_gender_adjusted_values.csv")
 
 # Save an object to a file
 saveRDS(covid_clinical, file = "covid_clinical.rds")
@@ -109,7 +106,6 @@ res <- residuals(lm_results) # residuals
 write.csv((broom::tidy(predicted)), "hemoglobin_gender_adj_values.csv")
 write.csv((broom::tidy(res)), "hemoglobin_gender_residuals.csv")
 
-
 # match covid_data with adjusted values data frame by names
 covid_data_adjusted <- match(covid_clinical, Age_gender_adjusted_values,by=c("names", "names.2", "names.3", "names.4"))
 
@@ -137,7 +133,6 @@ ggplot(clinical_data, aes(x = Age, y = Hemoglobin, colour = Gender))+
 ## So what do we do?
 
 ###----- Run multiple analyses -----###
-
 
 ## We could run many separate analyses and fit a regression for each of the mountain ranges.
 
@@ -181,8 +176,6 @@ df <- read.csv("Age_sex_adjusted_values.csv")
 library(tidyr)
 df2 <- df[order(df$Annotation),]
 write.csv(df2, file="Age_sex_adjusted_values_organized.csv")
-
-
 
 ortho <- read.csv("RecordID.csv")
 cluster5 <- read.csv("Age_sex_adjusted_values.csv")
