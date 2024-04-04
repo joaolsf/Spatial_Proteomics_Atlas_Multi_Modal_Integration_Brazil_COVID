@@ -1,5 +1,5 @@
 #Multiple Factor Analysis 
-#Load the packaages
+
 library("FactoMineR")
 library("factoextra")
 library("missMDA")
@@ -9,10 +9,7 @@ library(viridis)
 library(ggpubr)
 options(ggrepel.max.overlaps = 100)
 
-# reading file (importar o arquivo)
 multiplex <- read.csv("COVID_Clinical_Luminex_IMC_recovered_early_late_death_MFA.csv")
-
-# remove specific columns
 select_cols <- colnames(multiplex)
 select_cols <- select_cols[!select_cols %in% c("BlockID", "Length","Score", "Age", "Weight", "BMI", "DOSAA", "DDOUO","DOSAPA", "DOS_original")]
 multiplex <- multiplex[,select_cols]
