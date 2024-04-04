@@ -9,7 +9,7 @@ library(ggthemes)
 library(ggrepel)
 library(viridis)
 
-# reading file (importar o arquivo)
+# reading file 
 multiplex <- read.csv("Correlation_spearman_rcorr_clinical_PB_histo_signatures_only_last_sample_rvalues.csv")
 multiplex2 <- read.csv("Correlation_spearman_rcorr_clinical_PB_histo_signatures_only_last_sample_pvalues.csv")
 
