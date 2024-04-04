@@ -1,5 +1,5 @@
 #Multiple Factor Analysis 
-#Load the packaages
+
 library("FactoMineR")
 library("factoextra")
 library("missMDA")
@@ -9,16 +9,13 @@ library(viridis)
 library(ggpubr)
 options(ggrepel.max.overlaps = 100)
 
-# reading file (importar o arquivo)
 multiplex <- read.csv("COVID_Clinical_Luminex_Histology_IMC_early_late_death_MFA.csv")
 length <- multiplex$Length
 cats <- ifelse(length <= 1, 'Early death', 'Late death')
-# retirando as colunas indesejadas for correlation
+
 select_cols <- colnames(multiplex)
 select_cols <- select_cols[!select_cols %in% c("BlockID", "Length","Score", "Age", "Weight", "BMI", "DOSAA", "DOSAPA","DOS_original")]
-#"MAC387_Bronchial_Pattern", "MAC387_Alveolar_Pattern", "MAC387_Interstitial_Pattern", "Angiogenesis_Intussusception", "Angiogenesis_Sprouting", "Vascular_Congestion", "Arterial_Thrombi", "Venous_Thrombi", "Interstitial_Oedema","Lymphocytes_HE", "Megakaryocytes_HE
 multiplex <- multiplex[,select_cols]
-# data frame para cluster
 df_to_cluster <- multiplex[,-1]
 rownames(df_to_cluster) <- multiplex$RecordID
 #subsetting active variables for the PCA
@@ -66,14 +63,6 @@ mydata3 <- MFA(mydata2, group = c(72, 17, 113, 1, 1, 1), #luminex, clinical, IMC
 print(mydata3)
 
 # Visualization and interpretation
-# We’ll use the factoextra R package to help in the interpretation and the visualization of the multiple factor analysis.
-# The functions below [in factoextra package] will be used:
-# get_eigenvalue(res.mfa): Extract the eigenvalues/variances retained by each dimension (axis).
-# fviz_eig(res.mfa): Visualize the eigenvalues/variances.
-# get_mfa_ind(res.mfa): Extract the results for individuals.
-# get_mfa_var(res.mfa): Extract the results for quantitative and qualitative variables, as well as, for groups of variables.
-# fviz_mfa_ind(res.mfa), fviz_mfa_var(res.mfa): Visualize the results for individuals and variables, respectively.
-
 # 1- Eigenvalues / Variances
 # The proportion of variances retained by the different dimensions (axes) can be extracted using the function get_eigenvalue() [factoextra package] as follow:
 eig.val <- get_eigenvalue(mydata3)
@@ -156,11 +145,7 @@ fviz_mfa_var(mydata3,
                                          legend.position='bottom', legend.text = element_text(size = 12), text = element_text(size = 5),
                                       axis.title = element_text(size = 12),
                                       axis.text = element_text(size = 12)) 
-             
-# Color options:
-#800080
-#440154FF
-#F79C79
+            
 
 # The contribution of quantitative variables (in %) to the definition of the dimensions can be visualized using the function fviz_contrib() [factoextra package]. Variables are colored by groups. The R code below shows the top 20 variable categories contributing to the dimensions:
 # Contributions to dimension 1
@@ -208,11 +193,6 @@ plot_ <- ggplot(weights,
         axis.text.y = element_text(face = "plain", size=12, angle=90, vjust=.5, hjust=1),
         axis.text.x = element_text(face = "plain", size=9, angle=90, vjust=.5, hjust=1))
 plot_
-#  coord_flip() +
-# #800080" = purple
-# #440154FF" = deep purple
-# #F79C79 = orange
-# #21908CFF" = green
 
 #plot factor loadings for PC2
 weights2 <- read.csv("MFA2_correlation.csv")
@@ -227,12 +207,6 @@ plot_ <- ggplot(weights2,
         axis.text.y = element_text(face = "plain", size=12, angle=90, vjust=.5, hjust=1),
         axis.text.x = element_text(face = "plain", size=9, angle=90, vjust=.5, hjust=1))
 plot_
-#  coord_flip() +
-# #800080" = purple
-# #440154FF" = deep purple
-# #F79C79 = orange
-# #21908CFF" = green
-
 
 #3- Graph of individuals
 # To get the results for individuals, type this:
