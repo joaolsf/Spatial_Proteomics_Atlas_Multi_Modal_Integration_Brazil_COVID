@@ -6,7 +6,6 @@ library(car)
 
 
 #1- Data Pre-processing
-# reading file (importar o arquivo)
 multiplex <- read.csv("COVID_Clinical_Luminex_deceased_recovered_days.csv")
 multiplex <- multiplex[,1:73]
 
