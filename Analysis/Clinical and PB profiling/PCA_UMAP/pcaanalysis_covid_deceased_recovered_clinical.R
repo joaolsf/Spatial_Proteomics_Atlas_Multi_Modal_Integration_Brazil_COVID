@@ -1,7 +1,5 @@
-# reading file (importar o arquivo)
-multiplex <- read.csv("COVID_Clinical_deceased_recovered.csv")
 
-# data frame para cluster
+multiplex <- read.csv("COVID_Clinical_deceased_recovered.csv")
 df_to_cluster <- multiplex[,-1]
 rownames(df_to_cluster) <- multiplex$RecordID
 
@@ -11,7 +9,7 @@ df_to_cluster.active <- df_to_cluster[,1:22]
 # Prepare data
 mydata <- scale(df_to_cluster.active)
 
-#1- PCA Analysis using function PCA()[FactoMineR package]
+#1- PCA Analysis
 library("FactoMineR")
 library("factoextra")
 library(RColorBrewer)
@@ -56,8 +54,6 @@ mydata3 <- data.frame(subject = rownames(mydata2), kmeans_clustering = mydata2$f
 merged <- merge(pca2, mydata3, by = "subject", all = TRUE)
 merged2 <- data.frame(multiplex, subject = rownames(multiplex), kmeans_clustering = merged$kmeans_clustering, PC1 = merged$PC1, PC2 = merged$PC2)
 
-#Fazer o plot de PCA usando o ggplot
-#Fazer o plot PCA de mydata labeling different categories
 library(ggplot2)
 library(ggthemes)
 library(ggrepel)
@@ -65,13 +61,11 @@ ggplot(pca2, aes(x = PC1, y = PC2)) + geom_point()
 p <- ggplot(pca2, aes(x = PC1, y = PC2, label = subject))
 p + geom_point(aes(colour = factor(multiplex$Category2)), size = 5) + ggtitle("PC Patients") + theme_bw(base_size = 20) 
 
-#Plotting PCA de merged para labeling Kmeans clustering
 ggplot(merged, aes(x = PC1, y = PC2)) + geom_point()
 p <- ggplot(merged, aes(PC1, PC2, label = subject, col=factor(kmeans_clustering)))
 
 myColors <- c("grey", "salmon","dark blue") 
 p + geom_point (aes(shape = factor(multiplex$Category2)), size = 3) + scale_color_manual(values=myColors) + ggtitle("PC Patients") + theme_bw(base_size = 20) 
-
 
 #2- PCA with PCA function
 pca.mydata <- PCA(mydata, scale.unit = FALSE, ncp = 10, graph = TRUE)
@@ -148,11 +142,6 @@ plot_ <- ggplot(weights,
         axis.text.y = element_text(face = "plain", size=18, angle=90, vjust=.5, hjust=1),
         axis.text.x = element_text(face = "plain", size=22, angle=90, vjust=.5, hjust=1))
 plot_
-#  coord_flip() +
-# #800080" = purple
-# #440154FF" = deep purple
-# #F79C79 = orange
-# #21908CFF" = green
 
 #plot factor loadings for PC2
 weights2 <- read.csv("PC2_clinical_correlation.csv")
@@ -167,13 +156,6 @@ plot_ <- ggplot(weights2,
         axis.text.y = element_text(face = "plain", size=18, angle=90, vjust=.5, hjust=1),
         axis.text.x = element_text(face = "plain", size=22, angle=90, vjust=.5, hjust=1))
 plot_
-#  coord_flip() +
-# #800080" = purple
-# #440154FF" = deep purple
-# #F79C79 = orange
-# #21908CFF" = green
-
-
 
 #2.7- KMEANS CLUSTERING in the PCA REDUCTION
 # Create a grouping of individuals using kmeans
@@ -189,8 +171,6 @@ fviz_pca_ind(pca.mydata, col.ind = grp,
 res.km$cluster
 multiplex2 <- data.frame(multiplex, subject = rownames(multiplex), kmeans_cluster = res.km$cluster)
 write.csv(multiplex2, 'COVID_Clinical_deceased_recovered_kmeans.csv')
-
-
 
 #2.8- Quality and contribution individuals
 #it’s also possible to color individuals by their cos2 values:
@@ -223,10 +203,6 @@ p <- fviz_pca_ind(pca.mydata,
 
 p + geom_point(aes(colour = factor(cats3)), size = 5) + ggtitle("PC Patients") + theme_bw(base_size = 14) 
 
-#paletes examples
-c("black","#00AFBB", "#E7B800", "#FC4E07")
-"npg"
-"ggsci"
 #Size and shape of plot elements
 #Type ggpubr::show_point_shapes() to see available point shapes.
 ggpubr::show_point_shapes() 
@@ -295,17 +271,12 @@ fviz_pca_ind(pca.mydata2, geom.ind = "point", habillage = 40, pointsize = 10, po
              addEllipses =FALSE, ellipse.type = "confidence", ellipse.level = 0.95,
              palette = c("red", "brown", "black", "blue", "grey"), repel = TRUE, mean.point = FALSE, axes.linetype = "blank") + theme_bw(base_size = 14)
 
-
-"#00BA38", "#619CFF", "#F8766D"
-
-#All the outputs of the PCA (individuals/variables coordinates, contributions, etc) can be exported at once, into a TXT/CSV file, using the function write.infile() [in FactoMineR] package:
 # Export into a TXT file
 write.infile(pca.mydata, "pca.txt", sep = "\t")
 # Export into a CSV file
 write.infile(pca.mydata, "pca.csv", sep = ";")
 
 #2.10- PCA Biplot
-
 pca.mydata3 <- PCA(df_to_cluster, quali.sup = 27:31, graph=FALSE)
 
 fviz_pca_biplot(pca.mydata,
@@ -313,10 +284,7 @@ fviz_pca_biplot(pca.mydata,
                 col.var = "contrib", 
 repel = TRUE, alpha.var = "contrib") + scale_color_gradient2(low="white", mid="blue", 
                                                              high="red", midpoint=1) 
-#col.ind = "#696969",  # Individuals color
-#col.var = "#2E9FDF", # Variables color
-
-#to color individuals by disease outcome.
+#color individuals by disease outcome.
 p <- fviz_pca_biplot(pca.mydata,
                 # Fill individuals by groups
                 geom.ind = "point",
@@ -331,7 +299,7 @@ p <- fviz_pca_biplot(pca.mydata,
   ggpubr::fill_palette(palette = c("dark blue", "light grey")) + theme_bw(base_size = 24) 
 p
 
-#to color individuals by disease progression.
+# color individuals by disease progression.
 p2 <- fviz_pca_biplot(pca.mydata,
                      # Fill individuals by groups
                      geom.ind = "point",
@@ -366,11 +334,6 @@ p3 + geom_point(aes(shape = factor(multiplex$Category2), size=4)) + scale_shape_
   theme(axis.text.y = element_text(face = "plain", size=24, angle=0, vjust=1, hjust=0.5),
         axis.text.x = element_text(face = "plain", size=24, angle=0, vjust=1, hjust=0.5))
 
-
-#ggpubr::show_point_shapes() 
-#magma(256, direction = 1)) 
-#"#FDE725FF", "#DCE319FF", "#55C667FF", "#238A8DFF","#453781FF","#440154FF", "black"
-
 #another way to plot the graph above changing the shape accordingly to the groups - but it does not plot the variables on top
 pca <- as.data.frame(prcomp(mydata)$x) 
 pca2 <- data.frame(subject = rownames(pca), PC1 = pca$PC1, PC2 = pca$PC2)
@@ -394,19 +357,6 @@ p2 <- fviz_pca_ind(pca.mydata,
                      col.ind = "white", col.var = "white",) + ggpubr::fill_palette(palette = c("#FDE725FF", "#DCE319FF", "#55C667FF", "#238A8DFF","#453781FF","#440154FF", "black")) + theme_light(base_size = 12) 
 
 p2 + geom_point(aes(shape = multiplex$Category2), size=4) + scale_shape_manual(values=c(21, 23)) #changes the shape accordingly to the groups 
-
-#palette = c("#efe350ff", "#f68f46ff", "#a65c85ff", "#593d9cff","#13306dff","#042333ff", "black")
-#palette = c("#FDE725FF", "#DCE319FF", "#55C667FF", "#238A8DFF","#453781FF","#440154FF", "black")
-#palette = c("#FDE725FF", "#55C667FF", "#238A8DFF","#453781FF","#440154FF", "#DCE319FF"))  
-#"salmon",
-#"#440154FF", "#29AF7FFF", "#f7cb44ff"
-#"#FDE725FF", "#29AF7FFF", "#55C667FF"
-#"#440154FF", "#29AF7FFF", "#FDE725FF"
-
-#+ scale_color_gradient2(low="orange", mid="purple", 
-                        high="black", midpoint=5) +
-#  colorRampPalette(rev(brewer.pal(n = 7, name = "Spectral")))(7))
-#gradient.cols = magma(5, direction = -1)
 
 #3- UMAP
 set.seed(1234)
