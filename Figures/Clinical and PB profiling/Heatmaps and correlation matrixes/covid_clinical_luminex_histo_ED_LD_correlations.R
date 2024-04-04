@@ -8,7 +8,7 @@ library(ggcorrplot)
 library(Hmisc)
 library(corrplot)
 
-# reading file (importar o arquivo)
+# reading file
 multiplex <- read.csv("COVID_Clinical_PB_histology_factors_longitudinal_corr.csv")
 
 # retirando as colunas indesejadas para o heatmap
