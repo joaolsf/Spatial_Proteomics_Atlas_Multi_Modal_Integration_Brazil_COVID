@@ -9,8 +9,6 @@ library(forcats)
 library(Rmisc)
 library(ggpubr)
 
-
-# reading file (importar o arquivo)
 multiplex <- read.csv("COVID_Clinical_deceased_recovered_factor_scores_iteration1.csv")
 
 longer_data <- multiplex %>%
@@ -23,10 +21,6 @@ multiplex %>%
   geom_line(aes(color=Category), size = 0.5) + geom_point(aes(color=Category)) +
   facet_wrap(~question, scale="free", ncol = 5) +
   labs(x = "Day of Sampling") + scale_color_manual(values=c("salmon", "light blue", "dark grey")) + theme_bw(base_size = 10)
-
-
-"#6b4596ff", "#de7065ff", "#f7cb44ff"
-"#440154FF", "#29AF7FFF", "#f7cb44ff"
 
 #line plot for each signature
 
