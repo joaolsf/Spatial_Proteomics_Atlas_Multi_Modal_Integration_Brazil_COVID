@@ -9,7 +9,7 @@ library(ggthemes)
 library(ggrepel)
 library(viridis)
 
-# reading file (importar o arquivo)
+# reading file
 multiplex <- read.csv("COVID_Luminex_deceased_recovered_factor_loadings.csv")
 
 # data frame para cluster
@@ -26,16 +26,9 @@ factor3 <- mydata[,20:30]
 factor4 <- mydata[,31:61]
 factor5 <- mydata[,62:66]
   
-
-# Fazendo o heatmap
 library(ComplexHeatmap)
 library(circlize)
-## display a palettes simultanoeusly
-#options of colors for heatmaps
 library(RColorBrewer)
-display.brewer.all(n=10, exact.n=FALSE)
-col = colorRampPalette(rev(brewer.pal(n = 9, name = "Spectral")))(3)
-colorRamp2(c(-0.5, 0, 0.5), c("blue", "yellow", "red"), space = "RGB")
 
 rannot <- rowAnnotation(df = data.frame(cats), 
                         col = list(cats = c("Early death" = "salmon", "Late death" = "light blue", "Recovered" = "grey")), 
