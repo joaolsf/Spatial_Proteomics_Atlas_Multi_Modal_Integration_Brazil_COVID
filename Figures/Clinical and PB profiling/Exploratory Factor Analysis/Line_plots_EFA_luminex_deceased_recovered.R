@@ -10,7 +10,7 @@ library(Rmisc)
 library(ggpubr)
 
 
-# reading file (importar o arquivo)
+# reading file
 multiplex <- read.csv("COVID_Luminex_deceased_recovered_factor_scores.csv")
 
 longer_data <- multiplex %>%
