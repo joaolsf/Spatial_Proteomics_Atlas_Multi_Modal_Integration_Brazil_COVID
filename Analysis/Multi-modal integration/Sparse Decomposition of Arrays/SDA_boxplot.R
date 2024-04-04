@@ -9,8 +9,6 @@ library(tidyr)
 library(forcats)
 library(Rmisc)
 
-
-# reading file (importar o arquivo)
 multiplex <- read.csv("factor_loadings_patient_boxplot.csv")
 
 #BOX PLOTS METHOD 1
@@ -30,12 +28,6 @@ p <- ggplot(multiplex, aes(x=Group, y=SDA4, fill=Group)) +
 
 p + scale_fill_manual(values = c("salmon", "light blue")) + scale_x_discrete(limits=c("Early death", "Late death"))  + facet_grid(. ~ title) + 
   scale_y_continuous(limit = c(-2, 1))
-
-# #800080" = purple
-# #440154FF" = deep purple
-# #F79C79 = orange
-# #21908CFF" = green
-# #0080FF - blue
 
 #BAR PLOT
 multiplex$title <- "Days of Disease Onset until Death (DDOUD)"
