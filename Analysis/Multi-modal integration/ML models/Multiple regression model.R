@@ -1,7 +1,6 @@
-# reading file (importar o arquivo)
+
 multiplex <- read.csv("/Users/joaoluizsfilho/Dropbox/Work Files/Matthia's Lab/Projects/Severe Anemia/Integration/cohort_anemia_lm.csv")
 
-# retirando as colunas indesejadas 
 select_cols <- colnames(multiplex)
 select_cols <- select_cols[!select_cols %in% c("Study_number","Group","CXCL12", "PB_parasitemia", 
                                                "PB_density", "BM_asexual_dens", "BM_gam_dens", "BM_parasitemia",
@@ -12,11 +11,9 @@ select_cols <- select_cols[!select_cols %in% c("Study_number","Group","CXCL12", 
 
 # select_cols
 multiplex <- multiplex[,select_cols]
-# rename Individuo column
-multiplex$Individuo <- paste0("p", multiplex$Individuo)
 # data frame para cluster
 df_to_cluster <- multiplex[,-1]
-rownames(df_to_cluster) <- multiplex$Individuo
+rownames(df_to_cluster) <- multiplex$RecordID
 
 mydata <- df_to_cluster
 
