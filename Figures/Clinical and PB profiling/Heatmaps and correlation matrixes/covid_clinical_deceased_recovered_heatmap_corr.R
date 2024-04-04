@@ -9,7 +9,7 @@ library(ggthemes)
 library(ggrepel)
 library(viridis)
 
-# reading file (importar o arquivo)
+# reading file 
 multiplex <- read.csv("COVID_Clinical_deceased_recovered2.csv")
 
 # category 1
