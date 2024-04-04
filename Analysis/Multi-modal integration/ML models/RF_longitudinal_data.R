@@ -28,8 +28,6 @@ mydata$Outcome <- as.factor(mydata$Outcome)
 mydata2 <- mydata[1:47,] #RF analysis within the fatal group for prediction of disease progression
 mydata2$Outcome2 <- as.factor(mydata2$Outcome2)
 
-# Scaling is not necessary: https://stackoverflow.com/questions/8961586/do-i-need-to-normalize-or-scale-data-for-randomforest-r-package
-
 # 1- RF longitudinal data with the htree package
 
 # fit historical random forest 
@@ -460,8 +458,6 @@ plot_
 
 
 #####################################################################################################################################################################################################################################################################################################################################################################
-
-
 # 4- Variable Importance and Selection with VSURF package
 # 4.1- Recovered vs Fatal
 
@@ -936,7 +932,6 @@ auc@y.values
 # 4 - Accuracy
 acc.perf = performance(pred, measure = "acc")
 plot(acc.perf)
-
 
 ############################################################################################################################################################################################################################################################################################################################################################################################################################################################################################
 
