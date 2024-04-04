@@ -1,9 +1,8 @@
-# reading file (importar o arquivo)
-multiplex <- read.csv("COVID_Clinical_Luminex_Histology_IMC_early_late_death.csv")
 
+multiplex <- read.csv("COVID_Clinical_Luminex_Histology_IMC_early_late_death.csv")
 length <- multiplex$Length
 cats <- ifelse(length <= 1, 'Early death', 'Late death')
-# retirando as colunas indesejadas for correlation
+
 select_cols <- colnames(multiplex)
 select_cols <- select_cols[!select_cols %in% c("BlockID", "Length","Score")]
 
@@ -119,12 +118,6 @@ colorRampPalette(rev(brewer.pal(n = 7, name = "Spectral")))(7))
 ggpubr::fill_palette(palette = c("salmon", "light blue"))
 
 palette = magma(6, alpha = 1, begin = 0, end = 0.95, direction = -1)
-
-"grey"
-"dark green", 
-"black"
-"blue", "orange","dark green","red"
-"grey", "red", "brown","light blue","blue", "dark blue"
 
 p2 <- fviz_pca_ind(pca.mydata, 
              geom.ind = "point",
