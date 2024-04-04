@@ -16,13 +16,12 @@ library(caret)
 library(tidyverse)
 library(tidymodels)
 
-# Recovered vs Fatal outcome
+
 multiplex <- read.csv("COVID_Clinical_Luminex_deceased_recovered_all_samples_vsurf.csv")
 mydata <- multiplex[,-1]
 mydata2 <- mydata[,1:85]
 mydata2 <- as.data.frame(mydata2)
 
-# retirando as colunas indesejadas para o heatmap
 #select_cols <- colnames(multiplex)
 #select_cols <- select_cols[!select_cols %in% c("Age", "BMI", "Weight","Temperature", "HR",	"RR",	"SpO2",	"Disease_Score", "Outcome", "Outcome2", "Category2", "Day")]
 #multiplex <- multiplex[,select_cols]
@@ -61,39 +60,7 @@ covid_prep2 <-covid_recipe2 %>% prep(training = data_train, retain = TRUE)
 
 # 1.1- Ensemble Models (tree-based)
 
-# Random forests and gradient boosting are also examples of tree based ensemble models. 
-# In tree based ensemble models, multiple variants of a simple tree are combined to develop a more complex model with higher prediction power. 
-# The trade off of the ensemble is that the model becomes a black box and cannot be interpreted as simply as a decision tree. 
-# Thus, post-hoc analysis is required to explain the ensemble model.
-
 # 1.2- Random forest mechanism
-
-# Random forest is a step up of bootstrap aggregating/ bagging and bootstrap aggregating is a step up of decision tree. 
-# In bagging, multiple bootstrap samples are of the training data are used to train multiple single regression tree. 
-# As bootstrap samples are used, the same observation from the training set can be used more than once to train a regression tree. 
-# For regression problems, the ensemble occurs when the predictions of each tree are averaged to provide the predicted value for the bagging model. 
-# For classification problems, the ensemble occurs when the class probabilities of each tree are averaged to provide the predicted class. 
-# Alternatively, the majority predicted class of the ensemble of trees will be the predicted class for the model. 
-# Random forest is similar to bootstrap aggregating except that a random subset of variables is used for each split. 
-# The number of variables in this random subset of variables is known as mtry. The default mtry in regression problems is a third of the total number of available variables in the dataset. 
-# The default mtry in classification problems is the square root of the total number of available variables. - that is why the RF models 1, 2 and 3 and VSURF use 9 variables/tree.
-
-# 1.3- Training random forest models
-# We will train two random forest where each model adopts a different ranking approach for feature importance. The two ranking measurements are:
-
-# 1.3.1- Permutation based.
-# Permuting values in a variable decouples any relationship between the predictor and the outcome which renders the variable pseudo present in the model. 
-# When the out of bag sample is passed down the model with the permutated variable, the increased in error/ decreased in accuracy of the model can be calculated. 
-# This accuracy/error is compared against the baseline accuracy/error (for regression problems, the measurement will be R2) to calculate the importance score. 
-# This computation is repeated for all variables. 
-# The variable with the largest decrease in accuracy/largest increase in error is considered the most important variable because not considering the variable has the largest penalty on prediction. 
-# In the case of the randomForest package, the score measures the decrease in accuracy and this score is refer as the MeanDecreaseAccuracy.
-
-# Impurity based. Impurity refers to gini impurity/ gini index. 
-# The concept of impurity for random forest is the same as regression tree. 
-# Features which are more important have a lower impurity score/ higher purity score/ higher decrease in impurity score. 
-# The randomForest package, adopts the latter score which known as MeanDecreaseGini.
-  
 set.seed(1)
 rf_model<-rand_forest(trees = 1000,  mode = "classification") %>% 
   set_engine("randomForest",  importance=T, localImp = T, ) %>% # importance = T to have permutation score calculated
@@ -167,34 +134,6 @@ plot_ <- ggplot(Gini_Features,
   ggtitle("Important Features in Random Forest\n") + scale_fill_manual("legend", values = c("Clinical" = "black", "PB_biomarker" = "#800080")) +
   theme(axis.text.y = element_text(size = 6))
 plot_
-
-# In this post we did a post-hoc analysis on random forest to understand the model by using permutation and impurity variable importance ranking. 
-# In the next post, we will continue post-hoc analysis on random forest model using other techniques.
-
-
-# Reference tutorial: https://www.r-bloggers.com/2019/08/explaining-predictions-random-forest-post-hoc-analysis-randomforestexplainer-package/
-# Explaining Predictions: Random Forest Post-hoc Analysis (randomForestExplainer package)
-
-#1- Measuring variable importance
-
-# The randomForestExplainer generates more feature importance score than the randomForest package. 
-# These scores generated by the randomForestExplainer::measure_importance function can be categorized into 3 types of feature importance score.
-
-# 1.1- Measures of importance based on the structure of the forest which is not examine in the randomForest package.
-# i) Mean_minimal_depth: Minimal depth for a variable in a tree equals to the depth of the node which splits on that variable and is the closest to the root of the tree. 
-# If it is low then a lot of observations are divided into groups on the basis of this variable.
-# ii) no_of_nodes: Usually, number of trees and number of nodes are the same if trees are shallow. The number of nodes contain similar information as the number of trees and p-values. Thus, no_of_tress and p_value are omitted in plot_importance_ggpairs graph (which will be described later).
-# iii) no_of_trees
-# iv) p_value: Number of nodes in which predictor X was used for splitting exceeds the theoretical number of successes if they were random, following the binomial distribution given.
-# v) times_a_root: Measures of importance based on the decrease in predictive accuracy post variable perturbation
-
-# 1.2- 
-# i) accuracy_decrease: Use for classification problems. Same value as randomForest::importance(rf_model$fit, type=2)
-# ii) mse_increase: Use for regression problems.
-
-# 1.3- Measure of importance based on loss function
-# i) gini_decrease Use for classifcation cases. Same value as randomForest::importance(rf_model$fit, type=1).
-#ii) node_purity_increase: Use for regression cases. Measured by the decrease in sum of squares
 
 library(randomForestExplainer)
 impt_frame<-measure_importance(rf_model$fit)
