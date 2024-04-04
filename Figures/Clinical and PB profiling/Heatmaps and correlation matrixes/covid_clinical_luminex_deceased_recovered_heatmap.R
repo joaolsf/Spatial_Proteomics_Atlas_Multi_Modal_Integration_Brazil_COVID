@@ -9,7 +9,7 @@ library(ggthemes)
 library(ggrepel)
 library(viridis)
 
-# reading file (importar o arquivo)
+# reading file
 multiplex <- read.csv("COVID_Clinical_PB_histology_factors_only_last_sample_corr.csv")
 #multiplex <- multiplex[,1:8]
 # category 1
