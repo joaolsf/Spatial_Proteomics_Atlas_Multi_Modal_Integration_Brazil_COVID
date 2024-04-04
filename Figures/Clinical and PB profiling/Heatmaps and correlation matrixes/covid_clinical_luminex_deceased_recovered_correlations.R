@@ -8,7 +8,7 @@ library(ggcorrplot)
 library(Hmisc)
 library(corrplot)
 
-# reading file (importar o arquivo)
+# reading file
 multiplex <- read.csv("COVID_Clinical_Luminex_deceased_recovered_correlation_longitudinal_samples_v2.csv")
 #Reorder columns by biomarkers in the PB signatures
 library(tibble)
